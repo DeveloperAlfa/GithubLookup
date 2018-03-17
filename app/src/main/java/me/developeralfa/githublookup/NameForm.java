@@ -17,7 +17,7 @@ public class NameForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name_form);
-        ;
+
         editText = findViewById(R.id.editText1);
         button = findViewById(R.id.button);
         final Intent intent  = new Intent(this,Details.class);

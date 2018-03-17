@@ -1,6 +1,8 @@
 package me.developeralfa.githublookup;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +40,20 @@ public class Repodapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.repo,parent,false);
         TextView Name = view.findViewById(R.id.Name);
         Name.setText(repos.get(position).name);
         TextView Description = view.findViewById(R.id.Description);
         Description.setText(repos.get(position).description);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(repos.get(position).url));
+                context.startActivity(intent);
+            }
+        });
         return view;
     }
 }

@@ -2,10 +2,13 @@ package me.developeralfa.githublookup;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,15 +21,18 @@ public class Details extends AppCompatActivity {
     Repodapter repodapter;
     ArrayList<Repo> repos = new ArrayList<>();
     ImageView imageView;
+    LinearLayout linearLayout;
     TextView name;
+    Intent p;
     ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        Intent p = getIntent();
+        p = getIntent();
         imageView = findViewById(R.id.img);
         listView = findViewById(R.id.Repos);
+        linearLayout = findViewById(R.id.layout);
         repodapter = new Repodapter(repos,this);
         listView.setAdapter(repodapter);
         reposAsyncTask = new ReposAsyncTask(new ReposAsyncTask.OnDownloadListener() {
@@ -50,6 +56,13 @@ public class Details extends AppCompatActivity {
                     }
                 });
                 imageAsyncTask.execute(user.image);
+                linearLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/"+p.getStringExtra("text")));
+                        startActivity(intent);
+                    }
+                });
 
             }
         });
